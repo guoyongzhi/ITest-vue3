@@ -5,7 +5,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-
+import homeLayout from '@/homelayout'
 /* Router Modules */
 import componentsRouter from './modules/components'
 import chartsRouter from './modules/charts'
@@ -35,6 +35,10 @@ import itesteRouter from './modules/iTest'
  */
 
 /**
+ * 门户网站的路由加载
+ */
+
+/**
  * constantRoutes
  * a base page that does not have permission requirements
  * all roles can be accessed
@@ -48,6 +52,19 @@ export const constantRoutes = [
       {
         path: '/redirect/:path(.*)',
         component: () => import('@/views/redirect/index')
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: homeLayout,
+    hidden: true,
+    children: [
+      {
+        path: '/',
+        component: () => import('@/views/home/index'),
+        name: '首页',
+        meta: { title: '首页', icon: 'home', affix: true }
       }
     ]
   },
@@ -72,9 +89,9 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/',
+    path: '/dashboard',
     component: Layout,
-    redirect: '/dashboard',
+    // redirect: '/dashboard',
     children: [
       {
         path: 'dashboard',
@@ -390,7 +407,7 @@ export const asyncRoutes = [
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
