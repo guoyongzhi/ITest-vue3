@@ -1,9 +1,12 @@
 <template>
   <div class="navbar">
-    <!-- <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" /> -->
+    <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
-    <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" /> -->
-    <sidebar class="home-sidebar-container" />
+    <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
+    <sidebar class="sidebar-container" /> -->
+    <el-menu class="left-menu">
+      <el-menu-item>欢迎</el-menu-item>
+    </el-menu>
     <div class="right-menu">
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
@@ -20,7 +23,7 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img v-if="avatar" :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -48,7 +51,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import { Sidebar } from './Sidebar/index.vue'
+// import { Sidebar } from './Sidebar/index.vue'
 // import Breadcrumb from '@/components/Breadcrumb'
 // import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
@@ -61,7 +64,7 @@ export default {
   components: {
     // Breadcrumb,
     // Hamburger,
-    Sidebar,
+    // Sidebar,
     ErrorLog,
     Screenfull,
     SizeSelect,
@@ -114,6 +117,12 @@ export default {
   .errLog-container {
     display: inline-block;
     vertical-align: top;
+  }
+  .left-menu {
+    float: left;
+    height: 100%;
+    line-height: 50px;
+    margin-left: 100px;
   }
 
   .right-menu {
