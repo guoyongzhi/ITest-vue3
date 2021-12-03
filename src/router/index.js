@@ -37,9 +37,23 @@ import itesteRouter from './modules/iTest'
 /**
  * 门户网站的路由加载
  */
-
+export const homeRoutes = [
+  {
+    path: '/',
+    component: homeLayout,
+    hidden: true,
+    children: [
+      {
+        path: '/',
+        component: () => import('@/views/home/index'),
+        name: '首页',
+        meta: { title: '首页', icon: 'home', affix: true }
+      }
+    ]
+  }
+]
 /**
- * constantRoutes
+ * 常量路由
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
@@ -89,7 +103,7 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/dashboard',
+    path: '/admin/dashboard',
     component: Layout,
     // redirect: '/dashboard',
     children: [
@@ -102,7 +116,7 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/documentation',
+    path: '/admin/documentation',
     component: Layout,
     children: [
       {
@@ -114,9 +128,9 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/guide',
+    path: '/admin/guide',
     component: Layout,
-    redirect: '/guide/index',
+    redirect: '/admin/guide/index',
     children: [
       {
         path: 'index',
@@ -127,9 +141,9 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/profile',
+    path: '/admin/profile',
     component: Layout,
-    redirect: '/profile/index',
+    redirect: '/admin/profile/index',
     hidden: true,
     children: [
       {
@@ -143,14 +157,14 @@ export const constantRoutes = [
 ]
 
 /**
- * asyncRoutes
+ * 特殊路由
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
   {
-    path: '/permission',
+    path: '/admin/permission',
     component: Layout,
-    redirect: '/permission/page',
+    redirect: '/admin/permission/page',
     alwaysShow: true, // will always show the root menu
     name: 'Permission',
     meta: {
@@ -190,7 +204,7 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/icon',
+    path: '/admin/icon',
     component: Layout,
     children: [
       {
@@ -210,9 +224,9 @@ export const asyncRoutes = [
   itesteRouter,
 
   {
-    path: '/example',
+    path: '/admin/example',
     component: Layout,
-    redirect: '/example/list',
+    redirect: '/admin/example/list',
     name: 'Example',
     meta: {
       title: '例子',
@@ -242,7 +256,7 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/tab',
+    path: '/admin/tab',
     component: Layout,
     children: [
       {
@@ -255,7 +269,7 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/error',
+    path: '/admin/error',
     component: Layout,
     redirect: 'noRedirect',
     name: 'ErrorPages',
@@ -280,7 +294,7 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/error-log',
+    path: '/admin/error-log',
     component: Layout,
     children: [
       {
@@ -293,7 +307,7 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/excel',
+    path: '/admin/excel',
     component: Layout,
     redirect: '/excel/export-excel',
     name: 'Excel',
@@ -330,7 +344,7 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/zip',
+    path: '/admin/zip',
     component: Layout,
     redirect: '/zip/download',
     alwaysShow: true,
@@ -347,7 +361,7 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/pdf',
+    path: '/admin/pdf',
     component: Layout,
     redirect: '/pdf/index',
     children: [
@@ -360,13 +374,13 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/pdf/download',
+    path: '/admin/pdf/download',
     component: () => import('@/views/pdf/download'),
     hidden: true
   },
 
   {
-    path: '/theme',
+    path: '/admin/theme',
     component: Layout,
     children: [
       {
@@ -379,7 +393,7 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/clipboard',
+    path: '/admin/clipboard',
     component: Layout,
     children: [
       {
@@ -392,7 +406,7 @@ export const asyncRoutes = [
   },
 
   {
-    path: 'external-link',
+    path: '/admin/external-link',
     component: Layout,
     children: [
       {
