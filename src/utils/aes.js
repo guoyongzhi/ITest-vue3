@@ -1,29 +1,25 @@
 import CryptoJS from 'crypto-js'
 
-export default {
-  // 随机生成指定数量的16进制key
-  generatekey(num) {
-    const library = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-    let key = ''
-    for (var i = 0; i < num; i++) {
-      const randomPoz = Math.floor(Math.random() * library.length)
-      key += library.substring(randomPoz, randomPoz + 1)
-    }
-    return key
-  },
-  // 加密
-  encrypt(word, keyStr) {
-    keyStr = keyStr || 'abcdsxyzhkj12345' // 判断是否存在ksy，不存在就用定义好的key
-    var key = CryptoJS.enc.Utf8.parse(keyStr)
-    var srcs = CryptoJS.enc.Utf8.parse(word)
-    var encrypted = CryptoJS.AES.encrypt(srcs, key, { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 })
-    return encrypted.toString()
-  },
-  // 解密
-  decrypt(word, keyStr) {
-    keyStr = keyStr || 'abcdsxyzhkj12345'
-    var key = CryptoJS.enc.Utf8.parse(keyStr)
-    var decrypt = CryptoJS.AES.decrypt(word, key, { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 })
-    return CryptoJS.enc.Utf8.stringify(decrypt).toString()
-  }
+// 加密
+export function jsEncrypt(word, key, iv) {
+  var keyParse = CryptoJS.enc.Utf8.parse(key || '3d4ab4b0bb42dd54')
+  var ivParse = CryptoJS.enc.Utf8.parse(iv || '262ef81aafa7a095')
+  var srcs = CryptoJS.enc.Utf8.parse(word)
+  var encrypted = CryptoJS.AES.encrypt(srcs, keyParse, {
+    iv: ivParse,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+  })
+  return encrypted.toString()
+}
+// 解密
+export function jsDecrypt(word, key, iv) {
+  var newkey = CryptoJS.enc.Utf8.parse(key || '3d4ab4b0bb42dd54')
+  var newiv = CryptoJS.enc.Utf8.parse(iv || '262ef81aafa7a095')
+  var decrypt = CryptoJS.AES.decrypt(word, newkey, {
+    iv: newiv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+  })
+  return CryptoJS.enc.Utf8.stringify(decrypt).toString()
 }

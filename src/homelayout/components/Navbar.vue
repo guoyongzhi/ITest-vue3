@@ -1,11 +1,18 @@
 <template>
   <div class="navbar">
-    <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <!-- <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" /> -->
 
     <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
     <sidebar class="sidebar-container" /> -->
-    <el-menu class="left-menu">
-      <el-menu-item>欢迎</el-menu-item>
+    <el-menu class="left-menu" :default-active="activeIndex" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+      <el-menu-item><a href="">智信科技</a></el-menu-item>
+      <el-menu-item index="1"><router-link :to="{path:'/'}">首页</router-link></el-menu-item>
+      <el-menu-item index="3">人物简介</el-menu-item>
+      <el-menu-item index="4">解决方案</el-menu-item>
+      <el-menu-item index="5">实时新闻</el-menu-item>
+      <el-menu-item index="6">招财纳贤</el-menu-item>
+      <el-menu-item index="7">联系我们</el-menu-item>
+      <el-menu-item index="2"><router-link :to="{path:'/more'}">更多</router-link></el-menu-item>
     </el-menu>
     <div class="right-menu">
       <template v-if="device!=='mobile'">
@@ -51,9 +58,6 @@
 <script>
 import { mapGetters } from 'vuex'
 
-// import { Sidebar } from './Sidebar/index.vue'
-// import Breadcrumb from '@/components/Breadcrumb'
-// import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
@@ -62,13 +66,15 @@ import Search from '@/components/HeaderSearch'
 // export { default as Sidebar } from './Sidebar/index.vue'
 export default {
   components: {
-    // Breadcrumb,
-    // Hamburger,
-    // Sidebar,
     ErrorLog,
     Screenfull,
     SizeSelect,
     Search
+  },
+  data() {
+    return {
+      activeIndex: '1'
+    }
   },
   computed: {
     ...mapGetters([
@@ -84,6 +90,18 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath)
+      if (keyPath === '2') {
+        this.$router.push({
+          path: '/more'
+        })
+      } else {
+        this.$router.push({
+          path: '/'
+        })
+      }
     }
   }
 }
@@ -94,7 +112,7 @@ export default {
   height: 50px;
   overflow: hidden;
   position: relative;
-  background: #fff;
+  background: #545c64;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
   .hamburger-container {
@@ -129,6 +147,7 @@ export default {
     float: right;
     height: 100%;
     line-height: 50px;
+    margin-right: 100px;
 
     &:focus {
       outline: none;
@@ -139,7 +158,7 @@ export default {
       padding: 0 8px;
       height: 100%;
       font-size: 18px;
-      color: #5a5e66;
+      color: #fff;
       vertical-align: text-bottom;
 
       &.hover-effect {

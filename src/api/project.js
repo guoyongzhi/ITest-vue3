@@ -2,44 +2,39 @@ import request from '@/utils/request'
 
 export function projectAll() {
   return request({
-    url: '/iTest/project/all',
-    method: 'get',
-    baseURL: 'http://192.168.1.100:8080'
+    url: '/auto-test/project/all',
+    method: 'get'
   })
 }
 
 export function projectList(query) {
   return request({
-    url: '/iTest/project',
+    url: '/auto-test/project',
     method: 'get',
-    baseURL: 'http://192.168.1.100:8080',
     params: { ...query }
   })
 }
 
 export function createproject(data) {
   return request({
-    url: '/iTest/project',
+    url: '/auto-test/project',
     method: 'post',
-    baseURL: 'http://192.168.1.100:8080',
     data
   })
 }
 
 export function updateproject(data) {
   return request({
-    url: '/iTest/project',
+    url: '/auto-test/project',
     method: 'put',
-    baseURL: 'http://192.168.1.100:8080',
     data
   })
 }
 
 export function deleteproject(data) {
   return request({
-    url: '/iTest/project',
+    url: '/auto-test/project',
     method: 'delete',
-    baseURL: 'http://192.168.1.100:8080',
-    data
+    params: { ...data }
   })
 }

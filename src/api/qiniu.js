@@ -6,3 +6,14 @@ export function getToken() {
     method: 'get'
   })
 }
+
+export function UploadFiles(data) {
+  return request({
+    url: '/posts',
+    method: 'post',
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    data
+  })
+}

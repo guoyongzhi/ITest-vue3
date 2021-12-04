@@ -1,9 +1,8 @@
 <template>
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
-
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title"> 测 试 管 理 平 台 </h3>
       </div>
 
       <el-form-item prop="username">
@@ -13,7 +12,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Username"
+          placeholder="用户名"
           name="username"
           type="text"
           tabindex="1"
@@ -21,7 +20,7 @@
         />
       </el-form-item>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+      <el-tooltip v-model="capsTooltip" content="大写锁定已开启" placement="right" manual>
         <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon icon-class="password" />
@@ -31,7 +30,7 @@
             ref="password"
             v-model="loginForm.password"
             :type="passwordType"
-            placeholder="Password"
+            placeholder="密码"
             name="password"
             tabindex="2"
             autocomplete="on"
@@ -45,73 +44,142 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登陆</el-button>
 
+      <!-- <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
+        联系我们
+      </el-button> -->
       <div style="position:relative">
-        <div class="tips">
-          <span>Username : admin</span>
-          <span>Password : any</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">Username : editor</span>
-          <span>Password : any</span>
-        </div>
-
+        <!-- <div class="tips"> -->
+        <!-- <span>Username : xxxx</span> -->
+        <!-- <span>Password : ******</span> -->
+        <!-- </div> -->
+        <!-- <div class="tips"> -->
+        <!-- <span style="margin-right:18px;">Username : xxxx</span> -->
+        <!-- <span>Password : ******</span> -->
+        <!-- </div> -->
+        <el-button type="info" style="thirdparty-button" @click="RegistDialog=true">注册</el-button>
         <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
+          联系我们
         </el-button>
       </div>
     </el-form>
 
-    <el-dialog title="Or connect with" :visible.sync="showDialog">
-      Can not be simulated on local, so please combine you own business simulation! ! !
+    <el-dialog title="联系我们" :visible.sync="showDialog">
+      不能对本地进行模拟，所以请结合自己的业务模拟! ! !
       <br>
       <br>
       <br>
       <social-sign />
     </el-dialog>
+    <el-dialog title="注册" :visible.sync="RegistDialog">
+      <el-form ref="dataForm" :rules="regsitRules" :model="loginForm" label-position="left" label-width="120px" style="margin-left:30px;margin-right:30px;">
+        <el-form-item label="用户名" prop="username" placeholder="请输入用户名">
+          <el-input v-model="loginForm.username" />
+        </el-form-item>
+        <el-form-item label="密码" prop="password" placeholder="请输入密码">
+          <el-input
+            v-model="loginForm.password"
+            :type="passwordType"
+            @keyup.native="checkCapslock"
+            @blur="capsTooltip = false"
+            @keyup.enter.native="handleLogin"
+          />
+          <span ref="textPawStyle">{{ textPaw }}</span>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="RegistDialog = false">
+          取消
+        </el-button>
+        <el-button type="primary" @click="Regist">
+          注册
+        </el-button>
+      </div>
+    </el-dialog>
+    <div slot="footer" class="footer">
+      <span>Copyright 2021~2021 广州丹霄信息技术有限公司 | 粤ICP备1001001号</span>
+    </div>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
+import waves from '@/directive/waves' // waves directive
+import { regist } from '@/api/user'
+import { jsEncrypt } from '@/utils/aes'
 
 export default {
   name: 'Login',
   components: { SocialSign },
+  directives: { waves },
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+      if (value.length < 4) {
+        callback(new Error('用户名不能少于4位'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error('密码不能少于6位'))
       } else {
         callback()
       }
     }
+    const regsitPassword = (rule, value, callback) => {
+      if (value.length < 6) {
+        callback(new Error('密码不能少于6位'))
+      }
+      this.pawValue = this.checkStrong(value)
+      if (this.pawValue >= 1) {
+        this.textPaw = '弱'
+        this.$refs.textPawStyle.style.color = 'red'
+      }
+      if (this.pawValue >= 2 && this.pawValue < 4) {
+        this.textPaw = '中'
+        this.$refs.textPawStyle.style.color = 'orange'
+      }
+      if (this.pawValue === 4) {
+        this.textPaw = '强'
+        this.$refs.textPawStyle.style.color = 'green'
+      }
+      // if (value.length < 6) {
+      //   callback(new Error('密码不能少于6位'))
+      // } else {
+      callback()
+      // }
+    }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        password: [{ required: true, trigger: 'change', validator: validatePassword }]
+      },
+      regsitRules: {
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        password: [{ required: true, trigger: 'change', validator: regsitPassword }]
       },
       passwordType: 'password',
       capsTooltip: false,
       loading: false,
       showDialog: false,
+      RegistDialog: false,
       redirect: undefined,
-      otherQuery: {}
+      otherQuery: {},
+      textPaw: ''
     }
   },
+  // computed: {
+  //   websoket() {
+  //     console.log(this.$store.state.websocket.websoket)
+  //     return this.$store.state.websocket.websoket ? this.$store.state.websocket.websoket : ''
+  //   }
+  // },
   watch: {
     $route: {
       handler: function(route) {
@@ -142,6 +210,20 @@ export default {
       const { key } = e
       this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
     },
+    Regist() {
+      if (this.textPaw !== '强') {
+        this.$message({
+          type: 'warning',
+          message: '密码太简单请重新输入密码'
+        })
+        this.loginForm.password = ''
+        return false
+      }
+      regist({ username: this.loginForm.username.trim(), password: jsEncrypt(this.loginForm.password) }).then(response => {
+        console.log(response)
+        this.RegistDialog = false
+      })
+    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -158,14 +240,23 @@ export default {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm)
             .then(() => {
-              this.$router.push({ path: this.redirect || '/dashboard/dashboard', query: this.otherQuery })
+              this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+              this.loading = false
+            })
+            .catch(() => {
+              this.loading = false
+            })
+          // this.$store.dispatch('websocket/addOpenEvent')
+          // this.$store.dispatch('websocket/addCloseEvent')
+          // this.$store.dispatch('websocket/createWs')
+            .then(() => {
               this.loading = false
             })
             .catch(() => {
               this.loading = false
             })
         } else {
-          console.log('error submit!!')
+          console.log('错误提交!!')
           return false
         }
       })
@@ -177,6 +268,28 @@ export default {
         }
         return acc
       }, {})
+    },
+    checkStrong(sValue) {
+      var modes = 0
+      if (sValue.length < 1) return modes
+      if (/\d/.test(sValue)) modes++
+      if (/[a-z]/.test(sValue)) modes++
+      if (/[A-Z]/.test(sValue)) modes++
+      if (/\W/.test(sValue)) modes++
+      switch (modes) {
+        case 1:
+          // return 1
+          break
+        case 2:
+          // return 2
+          break
+        case 3:
+          break
+        case 4:
+          // return sValue.length < 4 ? 3 : 4
+          break
+      }
+      return modes
     }
     // afterQRScan() {
     //   if (e.key === 'x-admin-oauth-code') {
@@ -216,6 +329,8 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
+  html,body{height: 100%;}
+
   .el-input {
     display: inline-block;
     height: 47px;
@@ -244,6 +359,8 @@ $cursor: #fff;
     border-radius: 5px;
     color: #454545;
   }
+
+  // .footer{flex: 0;background: red}
 }
 </style>
 
@@ -255,8 +372,10 @@ $light_gray:#eee;
 .login-container {
   min-height: 100%;
   width: 100%;
+  background-image: url("http://192.168.1.163:6066/1211637-20190809112720089-1507550740.png");
   background-color: $bg;
   overflow: hidden;
+  display: flex;flex-direction: column;
 
   .login-form {
     position: relative;
@@ -313,6 +432,15 @@ $light_gray:#eee;
     position: absolute;
     right: 0;
     bottom: 6px;
+  }
+
+  .footer{
+    // flex: 1;
+    width: 100%;
+    position: fixed;
+    text-align: center;
+    bottom: 6px;
+    // background: #2d3a4b
   }
 
   @media only screen and (max-width: 470px) {
