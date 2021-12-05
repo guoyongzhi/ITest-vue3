@@ -5,52 +5,35 @@
     <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
     <sidebar class="sidebar-container" /> -->
     <el-menu class="left-menu" :default-active="activeIndex" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-      <el-menu-item><a href="">智信科技</a></el-menu-item>
-      <el-menu-item index="1"><router-link :to="{path:'/'}">首页</router-link></el-menu-item>
-      <el-menu-item index="3">人物简介</el-menu-item>
-      <el-menu-item index="4">解决方案</el-menu-item>
-      <el-menu-item index="5">实时新闻</el-menu-item>
-      <el-menu-item index="6">招财纳贤</el-menu-item>
-      <el-menu-item index="7">联系我们</el-menu-item>
-      <el-menu-item index="2"><router-link :to="{path:'/more'}">更多</router-link></el-menu-item>
+      <el-menu-item style="min-width: 180px;text-align: center;"><a href="">智信科技</a></el-menu-item>
+      <el-menu-item index="1" class="home-tab"><router-link :to="{path:'/'}">首页</router-link></el-menu-item>
+      <el-menu-item index="3" class="home-tab">人物简介</el-menu-item>
+      <el-menu-item index="4" class="home-tab">解决方案</el-menu-item>
+      <el-menu-item index="5" class="home-tab">实时新闻</el-menu-item>
+      <el-menu-item index="6" class="home-tab">招财纳贤</el-menu-item>
+      <el-menu-item index="7" class="home-tab">联系我们</el-menu-item>
+      <el-menu-item index="2" class="home-tab"><router-link :to="{path:'/more'}">更多</router-link></el-menu-item>
     </el-menu>
     <div class="right-menu">
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
 
-        <error-log class="errLog-container right-menu-item hover-effect" />
+        <!-- <error-log class="errLog-container right-menu-item hover-effect" /> -->
 
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
+        <!-- <screenfull id="screenfull" class="right-menu-item hover-effect" /> -->
 
-        <el-tooltip content="Global Size" effect="dark" placement="bottom">
+        <!-- <el-tooltip content="Global Size" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip>
-
+        </el-tooltip> -->
+        <a class="right-menu-item" href="" style="margin-left: 20px;">登录</a>
+        <a class="right-menu-item" href="">注册</a>
       </template>
 
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
-        <div class="avatar-wrapper">
-          <img v-if="avatar" :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu slot="dropdown">
-          <router-link to="/profile/index">
-            <el-dropdown-item>Profile</el-dropdown-item>
-          </router-link>
-          <router-link to="/">
-            <el-dropdown-item>Dashboard</el-dropdown-item>
-          </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">Log Out</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <!-- <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click"> -->
+      <div class="avatar-wrapper" witdh="20px">
+        <img v-if="avatar" :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+        <i class="el-icon-caret-bottom" />
+      </div>
     </div>
   </div>
 </template>
@@ -58,17 +41,16 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import ErrorLog from '@/components/ErrorLog'
-import Screenfull from '@/components/Screenfull'
-import SizeSelect from '@/components/SizeSelect'
+// import ErrorLog from '@/components/ErrorLog'
+// import Screenfull from '@/components/Screenfull'
+// import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
 
-// export { default as Sidebar } from './Sidebar/index.vue'
 export default {
   components: {
-    ErrorLog,
-    Screenfull,
-    SizeSelect,
+    // ErrorLog,
+    // Screenfull,
+    // SizeSelect,
     Search
   },
   data() {
@@ -78,15 +60,11 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'sidebar',
       'avatar',
       'device'
     ])
   },
   methods: {
-    toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar')
-    },
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
@@ -109,7 +87,7 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
-  height: 50px;
+  height: 60px;
   overflow: hidden;
   position: relative;
   background: #545c64;
@@ -132,6 +110,11 @@ export default {
     float: left;
   }
 
+  .home-tab {
+    min-width: 120px;
+    text-align: center;
+  }
+
   .errLog-container {
     display: inline-block;
     vertical-align: top;
@@ -140,14 +123,14 @@ export default {
     float: left;
     height: 100%;
     line-height: 50px;
-    margin-left: 100px;
+    margin-left: 150px;
   }
 
   .right-menu {
     float: right;
     height: 100%;
     line-height: 50px;
-    margin-right: 100px;
+    margin-right: 200px;
 
     &:focus {
       outline: none;
@@ -160,6 +143,7 @@ export default {
       font-size: 18px;
       color: #fff;
       vertical-align: text-bottom;
+      text-align: center;
 
       &.hover-effect {
         cursor: pointer;
@@ -172,6 +156,7 @@ export default {
     }
 
     .avatar-container {
+      min-width: 35px;
       margin-right: 30px;
 
       .avatar-wrapper {

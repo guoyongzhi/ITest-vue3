@@ -111,7 +111,7 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/admin/dashboard',
+    path: '/dashboard',
     component: Layout,
     // redirect: '/dashboard',
     children: [
@@ -124,7 +124,7 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/admin/documentation',
+    path: '/documentation',
     component: Layout,
     children: [
       {
@@ -136,9 +136,9 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/admin/guide',
+    path: '/guide',
     component: Layout,
-    redirect: '/admin/guide/index',
+    redirect: '/guide/index',
     children: [
       {
         path: 'index',
@@ -149,9 +149,9 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/admin/profile',
+    path: '/profile',
     component: Layout,
-    redirect: '/admin/profile/index',
+    redirect: '/profile/index',
     hidden: true,
     children: [
       {

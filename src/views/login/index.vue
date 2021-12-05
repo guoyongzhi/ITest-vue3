@@ -211,7 +211,7 @@ export default {
       this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
     },
     Regist() {
-      if (this.textPaw !== '强') {
+      if (this.textPaw === '强' || this.textPaw === '中') {
         this.$message({
           type: 'warning',
           message: '密码太简单请重新输入密码'

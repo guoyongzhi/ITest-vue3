@@ -6,7 +6,10 @@
         <navbar />
       </div>
       <app-main />
-      <footer>1111
+      <footer>
+        <div style="position: fixed;left: 0;bottom: 0;width: 100%;font-size:18px;text-align: center;">
+          <u><a href="http://beian.miit.gov.cn">粤ICP备19072537号</a></u>
+        </div>
       </footer>
     </div>
   </div>
