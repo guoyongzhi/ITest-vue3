@@ -6,17 +6,17 @@
         <navbar />
       </div>
       <app-main />
-      <footer>
-        <div style="position: fixed;left: 0;bottom: 0;width: 100%;font-size:18px;text-align: center;">
+      <Footer />
+      <!-- <div style="position: fixed;left: 0;bottom: 0;width: 100%;font-size:18px;text-align: center;">
           <u><a href="http://beian.miit.gov.cn">粤ICP备19072537号</a></u>
-        </div>
-      </footer>
+        </div> -->
+      <!-- </footer> -->
     </div>
   </div>
 </template>
 
 <script>
-import { AppMain, Navbar } from './components'
+import { AppMain, Navbar, Footer } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
 
@@ -24,7 +24,8 @@ export default {
   name: 'Layout',
   components: {
     AppMain,
-    Navbar
+    Navbar,
+    Footer
   },
   mixins: [ResizeMixin],
   computed: {
