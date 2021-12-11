@@ -3,8 +3,14 @@
     <div class="footer box">
       <div class="wx-box">
         <ul>
-          <li><img src="../../assets/images/wx.png"><span>我的微信</span></li>
-          <li><img src="../../assets/images/wx.png"><span>我的微信</span></li>
+          <li>
+            <img src="../../assets/images/wx.png">
+            <span>我的微信</span>
+          </li>
+          <li>
+            <img src="../../assets/images/wx.png">
+            <span>我的微信</span>
+          </li>
         </ul>
       </div>
       <div class="end-nav">
@@ -41,7 +47,7 @@ footer { padding: 30px 0 70px }
 footer:before { content: ""; background: #34aadc linear-gradient(to left, #1487f4, #5ac8fa, #007aff, #5ac8fa); height: 10px; width: 100%; position: absolute; top: 0; left: 0; }
 .box,.article-box { width: 1170px; margin: auto; overflow: hidden;margin-top: 10px}
 .wx-box { overflow: hidden; float: left; margin-right: 20px }
-.wx-box li { float: left; margin: 0 10px; text-align: center }
+.wx-box li { float: left; margin: 0 10px; text-align: center;width: 100px; }
 .wx-box img { height: 100px }
 
 /* .wx-box { width: 100%; text-align: center; margin-bottom: 20px }
