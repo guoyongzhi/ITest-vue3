@@ -10,8 +10,8 @@
       <div class="logo">
         <router-link to="">
           <!-- <img src="../../assets/images/logo.png"> -->
-          <h2 class="logo-title">StyleYong</h2>
-          <p class="logo-text">技术建站，让你对手追赶</p>
+          <h2 class="logo-title">Zhixin</h2>
+          <p class="logo-text">智信科技，让你对手追赶</p>
         </router-link>
       </div>
     </div>
@@ -20,8 +20,8 @@
       <el-menu class="left-menu" :default-active="activeIndex" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
         <el-menu-item style="min-width: 180px;text-align: center;"><a href="">智信科技</a></el-menu-item>
         <el-menu-item index="1" style="min-width: 90px;text-align: center;"><router-link :to="{path:'/'}">首页</router-link></el-menu-item>
-        <el-menu-item index="3" class="left-menu-item" style="min-width: 90px;text-align: center;">人物简介</el-menu-item>
-        <el-menu-item index="4" class="left-menu-item" style="min-width: 90px;text-align: center;">解决方案</el-menu-item>
+        <el-menu-item index="3" style="min-width: 90px;text-align: center;"><router-link :to="{path: '/profile'}">人物简介</router-link></el-menu-item>
+        <!-- <el-menu-item index="4" class="left-menu-item" style="min-width: 90px;text-align: center;">解决方案</el-menu-item> -->
         <el-menu-item index="5" class="left-menu-item" style="min-width: 90px;text-align: center;">实时新闻</el-menu-item>
         <el-menu-item index="6" class="left-menu-item" style="min-width: 90px;text-align: center;">招财纳贤</el-menu-item>
         <el-menu-item index="7" class="left-menu-item" style="min-width: 90px;text-align: center;">联系我们</el-menu-item>
@@ -112,7 +112,7 @@ span { display: block }
 /*search*/
 .search { float: right; margin-top: 16px; border-radius: 0 5px 5px 0; width: 400px; background: linear-gradient(to right, #0062ff 0%, #00a0ec 100%); }
 .search p { margin-bottom: 10px; }
-.search input.input_submit { border: 0; background: url("../../assets/images/search.png") no-repeat left 10px center; color: #fff; outline: none; line-height: 36px; font-size: 15px; width: 100px; cursor: pointer; letter-spacing: 5px; text-indent: 1em; }
+.search input.input_submit { border: 0; background: url("../../assets/images/search.png") no-repeat left 10px center; color: #fff; outline: none; line-height: 36px; font-size: 18px; width: 100px; cursor: pointer; letter-spacing: 5px; text-indent: 1em; }
 .search input.input_text { border: 0; line-height: 36px; height: 36px; outline: none; width: 300px; background: #f3f3f3; float: left; text-indent: 1em; }
 /*top-nav*/
 .top-nav { width: 100%; background: #1487f4; }
