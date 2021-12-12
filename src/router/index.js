@@ -35,24 +35,6 @@ import itesteRouter from './modules/iTest'
  */
 
 /**
- * 门户网站的路由加载
- */
-export const homeRoutes = [
-  {
-    path: '/',
-    component: homeLayout,
-    hidden: true,
-    children: [
-      {
-        path: '/',
-        component: () => import('@/views/home/index'),
-        name: '首页',
-        meta: { title: '首页', icon: 'home', affix: true }
-      }
-    ]
-  }
-]
-/**
  * 常量路由
  * a base page that does not have permission requirements
  * all roles can be accessed
@@ -97,7 +79,7 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/login',
+    path: '/admin/login',
     component: () => import('@/views/login/index'),
     hidden: true
   },
@@ -115,19 +97,6 @@ export const constantRoutes = [
     path: '/401',
     component: () => import('@/views/error-page/401'),
     hidden: true
-  },
-  {
-    path: '/dashboard',
-    component: Layout,
-    // redirect: '/dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: '仪表盘',
-        meta: { title: '仪表盘', icon: 'dashboard', affix: true }
-      }
-    ]
   },
   {
     path: '/documentation',
@@ -167,10 +136,10 @@ export const constantRoutes = [
         meta: { title: '配置', icon: 'user', noCache: true }
       }
     ]
-  },
+  }
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 /**
@@ -178,6 +147,19 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  {
+    path: '/admin',
+    component: Layout,
+    redirect: '/admin/dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index'),
+        name: '仪表盘',
+        meta: { title: '仪表盘', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
   {
     path: '/admin/permission',
     component: Layout,
