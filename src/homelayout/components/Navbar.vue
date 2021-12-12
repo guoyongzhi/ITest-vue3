@@ -18,7 +18,7 @@
     <div class="clear" />
     <div class="top-nav">
       <el-menu class="left-menu" :default-active="activeIndex" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-        <el-menu-item style="min-width: 180px;text-align: center;"><a href="">智信科技</a></el-menu-item>
+        <el-menu-item style="min-width: 180px;text-align: center;margin-left: 200px; "><a href="">智信科技</a></el-menu-item>
         <el-menu-item index="1" style="min-width: 90px;text-align: center;"><router-link :to="{path:'/'}">首页</router-link></el-menu-item>
         <el-menu-item index="3" style="min-width: 90px;text-align: center;"><router-link :to="{path: '/profile'}">人物简介</router-link></el-menu-item>
         <!-- <el-menu-item index="4" class="left-menu-item" style="min-width: 90px;text-align: center;">解决方案</el-menu-item> -->
