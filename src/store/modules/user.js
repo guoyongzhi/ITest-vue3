@@ -36,10 +36,12 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: jsEncrypt(password) }).then(response => {
         const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        commit('SET_TOKEN', data.ctoken)
+        setToken(data.ctoken)
+        console.log('登录成功')
         resolve()
       }).catch(error => {
+        console.log('登录失败', error)
         reject(error)
       })
     })

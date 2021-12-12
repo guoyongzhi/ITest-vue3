@@ -240,7 +240,8 @@ export default {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm)
             .then(() => {
-              this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+              console.log(this.redirect || '/admin')
+              this.$router.push({ path: this.redirect || '/admin', query: this.otherQuery })
               this.loading = false
             })
             .catch(() => {
