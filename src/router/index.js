@@ -83,6 +83,12 @@ export const constantRoutes = [
         meta: { title: '首页', icon: 'home', affix: true }
       },
       {
+        path: '/profile',
+        component: () => import('@/views/home/profile'),
+        mame: '人物简介',
+        meta: { title: '人物简介', icon: 'user', affix: true }
+      },
+      {
         path: '/more',
         component: () => import('@/views/home/more'),
         name: '更多',
@@ -161,7 +167,10 @@ export const constantRoutes = [
         meta: { title: '配置', icon: 'user', noCache: true }
       }
     ]
-  }
+  },
+
+  // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 /**
@@ -277,7 +286,7 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/admin/error',
+    path: '/error',
     component: Layout,
     redirect: 'noRedirect',
     name: 'ErrorPages',
