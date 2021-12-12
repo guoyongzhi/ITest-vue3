@@ -8,7 +8,7 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/', '/more', '/login', '/auth-redirect'] // no redirect whitelist
+const whiteList = ['/', '/admin', '/login', '/auth-redirect'] // no redirect whitelist
 
 router.beforeEach(async(to, from, next) => {
   // 开始进度条
@@ -20,7 +20,9 @@ router.beforeEach(async(to, from, next) => {
   // determine whether the user has logged in
   const hasToken = getToken()
   console.log(hasToken)
-  if (to.path.search('/admin')) {
+  console.log(to.path)
+  console.log(to.path.indexOf('/admin'))
+  if (to.path.indexOf('/admin') === 0) {
     if (hasToken) {
       if (to.path === '/login') {
         // 如果已登录，重定向到主页
